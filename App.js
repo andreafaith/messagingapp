@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Status from './components/status';
 
@@ -7,8 +6,8 @@ export default function App() {
     <View style={styles.container}>
       <Status/>
       <View style={styles.content}>
-        <Text>MESSAGING APP - ALIMORONG</Text> 
-        </View>
+        <Text style={styles.content}>MESSAGING APP - ALIMORONG</Text> 
+      </View>
     </View>
   );
 }
@@ -20,6 +19,11 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    fontWeight: "bold",
+    fontSize: 15,
+    marginTop: 50,
+    fontFamily: 'Arial',
+    alignItems: 'center',
     background: '#fff',
   },
   inputMethodEditor: {
@@ -28,7 +32,7 @@ const styles = StyleSheet.create({
   },
   toolbar: {
     borderTopWidth: 1,
-    borderTopColor: 'rgba(0,0,0,0.04)',
+    borderTopColor: 'rgba(0, 0, 0, 0.04)',
     backgroundColor: '#fff' 
   },
 

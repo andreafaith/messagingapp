@@ -1,6 +1,8 @@
 import React from 'react';
-import { Constants, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Constants, Platform, StatusBar, StyleSheet, Text, View, } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
+import * as Animated from 'react-native-animatable';
+
 
 export default class Status extends React.Component {
   state = {
@@ -8,19 +10,15 @@ export default class Status extends React.Component {
   };
 
   componentDidMount() {
-    // Get the initial network connection status
     NetInfo.fetch().then((status) => {
       this.updateStatus(status.isConnected);
     });
-
-    // Add an event listener for network changes
     this.subscription = NetInfo.addEventListener((status) => {
       this.updateStatus(status.isConnected);
     });
   }
 
   componentWillUnmount() {
-    // Remove the event listener when the component unmounts
     this.subscription && this.subscription();
   }
 
@@ -31,32 +29,32 @@ export default class Status extends React.Component {
   render() {
     const { info } = this.state;
     const isConnected = info !== 'none';
-    const backgroundColor = isConnected ? 'white' : 'red';
-
+    const backgroundColor = isConnected ? 'blue' : 'yellow';
+  
     if (Platform.OS === 'ios') {
       return (
-        <View style={[styles.status, { backgroundColor }]}>
+        <Animated.View animation={isConnected ? 'bounceOut' : 'bounceIn'} duration={9000} style={[styles.status, { backgroundColor }]}>
           <StatusBar
             backgroundColor={backgroundColor}
             barStyle={isConnected ? 'dark-content' : 'light-content'}
-            animated={false}
+            animated={true}
           />
-        </View>
+        </Animated.View>
       );
     } else {
       return (
-        <View style={styles.messageContainer} pointerEvents="none">
+        <Animated.View animation={isConnected ? 'bounceOut' : 'bounceIn'} duration={5000} style={styles.messageContainer} pointerEvents="none">
           <StatusBar
             backgroundColor={backgroundColor}
             barStyle={isConnected ? 'dark-content' : 'light-content'}
-            animated={false}
+            animated={true}
           />
           {!isConnected && (
             <View style={styles.bubble}>
               <Text style={styles.text}>No network connection</Text>
             </View>
           )}
-        </View>
+        </Animated.View>
       );
     }
   }
@@ -82,9 +80,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
-    backgroundColor: 'red',s
+    marginTop: 20,
+    backgroundColor: '#F9CB40',
   },
   text: {
-    color: 'white',
+    color: 'black',
   },
 });
